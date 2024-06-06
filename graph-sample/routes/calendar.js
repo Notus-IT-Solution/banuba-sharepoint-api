@@ -20,7 +20,6 @@ router.get('/',
       const params = {
         active: { calendar: true }
       };
-
       // Get the user
       const user = req.app.locals.users[req.session.userId];
       // Convert user's Windows time zone ("Pacific Standard Time")
@@ -44,8 +43,9 @@ router.get('/',
           dateFns.formatISO(weekStart),
           dateFns.formatISO(weekEnd),
           user.timeZone);
-
+    
         // Assign the events to the view parameters
+
         params.events = events.value;
       } catch (err) {
         req.flash('error_msg', {

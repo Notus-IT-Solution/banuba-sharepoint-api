@@ -1,0 +1,15 @@
+<!-- Copyright (c) Microsoft Corporation.
+     Licensed under the MIT License. -->
+
+<!-- <NewEventFormSnippet> -->
+<h1 class="mb-3">Update Item</h1>
+
+<form id="updateForm" method="POST" action="/sharepoint/{{ id }}">
+  <div class="form-group">
+    <label>Title</label>
+    <input id="titleInput" class="form-control" name="title" type="text" value="{{ updateItem.title }}">
+  </div>
+  <button type="button" class="btn btn-primary mr-2" onclick="updateEvent()">Update</button>
+  <a class="btn btn-secondary" href="/sharepoint">Cancel</a>
+</form>
+<!-- </NewEventFormSnippet> -->

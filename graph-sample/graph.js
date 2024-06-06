@@ -18,7 +18,6 @@ module.exports = {
   // <GetCalendarViewSnippet>
   getCalendarView: async function(msalClient, userId, start, end, timeZone) {
     const client = getAuthenticatedClient(msalClient, userId);
-
     return client
       .api('/me/calendarview')
       // Add Prefer header to get back times in user's timezone
@@ -77,6 +76,51 @@ module.exports = {
       .post(newEvent);
   },
   // </CreateEventSnippet>
+
+  // <GetSharepointViewSnippet>
+  getSharepointItems: async function(msalClient, userId) {
+    const client = getAuthenticatedClient(msalClient, userId);
+    return client
+      .api("/sites/notuscom.sharepoint.com/lists/test/items")
+      .expand('fields($select=Title)')
+      .get();
+  },
+
+  createItem: async function(msalClient, userId, formData) {
+    const client = getAuthenticatedClient(msalClient, userId);
+
+    const newItem = {
+      fields: {
+        Title: formData.title 
+      }
+    };
+
+    // POST /me/events
+    await client
+      .api('/sites/notuscom.sharepoint.com/lists/test/items')
+      .post(newItem);
+  },
+
+  updateItem: async function(msalClient, userId, formData, itemId) {
+    const client = getAuthenticatedClient(msalClient, userId);
+
+    const fieldValueSet = {Title: formData.title};
+
+    await client
+      .api(`/sites/notuscom.sharepoint.com/lists/test/items/${itemId}/fields`)
+      .update(fieldValueSet);
+  },
+
+
+  deleteItem: async function(msalClient, userId, itemId) {
+    const client = getAuthenticatedClient(msalClient, userId);
+
+    // POST /me/events
+    await client
+      .api(`/sites/notuscom.sharepoint.com/lists/test/items/${itemId}`)
+      .delete();
+
+  },
 
 };
 
